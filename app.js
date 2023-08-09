@@ -38,6 +38,8 @@ app.get('/incidentes', async (req, res) => {
   }
 });
 
+
+
 app.post('/incidentes', async (req, res) => {
   try {
     await client.connect();
@@ -64,6 +66,24 @@ app.get('/latest', async (req, res) => {
       .find()
       .sort({ _id: -1 }) // Sort in reverse order by _id (assuming _id is a timestamp)
       .limit(10) // Limit to the last 10 documents
+      .toArray();
+
+    res.json(documents);
+  } catch (error) {
+    console.error('Error retrieving documents:', error);
+    res.status(500).send('Error retrieving documents');
+  }
+});
+
+app.get('/recent', async (req, res) => {
+  try {
+    await client.connect();
+    const database = client.db('incidentes');
+    const collection = database.collection('incidentes');
+
+    const documents = await collection
+      .find()
+      .sort({ _id: -1 }) // Sort in reverse order by _id (assuming _id is a timestamp)
       .toArray();
 
     res.json(documents);
