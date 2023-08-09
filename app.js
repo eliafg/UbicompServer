@@ -1,6 +1,7 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
-
+app.use(bodyParser.json());
 const app = express();
 const port = 3000;
 
@@ -33,6 +34,22 @@ app.get('/incidentes', async (req, res) => {
   } catch (error) {
     console.error('Error retrieving documents:', error);
     res.status(500).send('Error retrieving documents');
+  }
+});
+
+app.post('/incidentes', async (req, res) => {
+  try {
+    await client.connect();
+    const database = client.db('incidentes');
+    const collection = database.collection('incidentes');
+
+    const newIncident = req.body;
+    const result = await collection.insertOne(newIncident);
+
+    res.json(result);
+  } catch (error) {
+    console.error('Error adding incident:', error);
+    res.status(500).send('Error adding incident');
   }
 });
 
