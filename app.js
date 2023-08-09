@@ -4,6 +4,7 @@ const MongoClient = require('mongodb').MongoClient;
 const app = express();
 const port = 3000;
 app.use(bodyParser.json());
+app.use(cors());
 // Replace with your MongoDB connection string
 const uri = 'mongodb+srv://eliaf2:fVkqoLNpokzqO65F@moviles.xddr9.mongodb.net/?retryWrites=true&w=majority';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
