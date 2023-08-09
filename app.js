@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
 const app = express();
 const port = 3000;
+const cors = require('cors');
 app.use(bodyParser.json());
 app.use(cors());
 // Replace with your MongoDB connection string
